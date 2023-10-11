@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accept and Reject Buttons</title>
+    <style>
+        .centered {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -50px;
+            margin-left: -100px;
+        }
+
+        .button-container {
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            gap: 20px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .accept {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .reject {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="centered">
+        <div id="requestIdDiv" class="button-container" style="display: none;">
+            <h2>request id: <span id="requestId"></span></h2>
+        </div>
+        <div class="button-container">
+            <button class="button accept" onclick="acceptFunction()">Accept</button>
+            <button class="button reject" onclick="rejectFunction()">Reject</button>
+        </div>
+
+    </div>
+
+    <script>
+        let queryString = window.location.search;
+        let params = new URLSearchParams(queryString);
+        let requestId = params.get("requestId");
+        if (requestId != null) {
+            document.getElementById("requestId").innerHTML = requestId;
+            document.getElementById("requestIdDiv").style.display = "block";
+        }
+
+        let returnUrl = "http://127.0.0.1:5500/paymentMock.html";
+        function acceptFunction() {
+            let status = "accept";
+            location.href = `${returnUrl}?requestId=${requestId}&status=${status}`;
+        }
+
+        function rejectFunction() {
+            let status = "reject";
+            location.href = `${returnUrl}?requestId=${requestId}&status=${status}`;
+        }
+    </script>
+</body>
+
+</html>
