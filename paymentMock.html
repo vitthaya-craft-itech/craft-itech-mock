@@ -45,8 +45,12 @@
             <h2>request id: <span id="requestId"></span></h2>
         </div>
         <div class="button-container">
-            <button class="button accept" onclick="acceptFunction()">Accept</button>
-            <button class="button reject" onclick="rejectFunction()">Reject</button>
+            <button class="button accept" onclick="acceptFunction()">Accept UAT</button>
+            <button class="button reject" onclick="rejectFunction()">Reject UAT</button>
+        </div>
+        <div class="button-container">
+            <button class="button accept" onclick="acceptFunctionLocalhost()">Accept Local Host</button>
+            <button class="button reject" onclick="rejectFunctionLocalhost()">Reject Local Host</button>
         </div>
 
     </div>
@@ -60,15 +64,27 @@
             document.getElementById("requestIdDiv").style.display = "block";
         }
 
-        let returnUrl = "http://127.0.0.1:5500/paymentMock.html";
+        let returnUrl = "https://incentives-uat.eeco.or.th/business-owner/benefit-visa";
         function acceptFunction() {
-            let status = "accept";
-            location.href = `${returnUrl}?requestId=${requestId}&status=${status}`;
+            let status = "1";
+            location.href = `${returnUrl}?requestId=${requestId}&status=${status}&step=3`;
         }
 
         function rejectFunction() {
-            let status = "reject";
-            location.href = `${returnUrl}?requestId=${requestId}&status=${status}`;
+            let status = "0";
+            let err = "reject";
+            location.href = `${returnUrl}?requestId=${requestId}&status=${status}&err=${err}&step=3`;
+        }
+
+        function acceptFunctionLocalhost() {
+            let status = "1";
+            location.href = `http://localhost:3000/business-owner/benefit-visa?requestId=${requestId}&status=${status}&step=3`;
+        }
+
+        function rejectFunctionLocalhost() {
+            let status = "0";
+            let err = "reject";
+            location.href = `http://localhost:3000/business-owner/benefit-visa?requestId=${requestId}&status=${status}&err=${err}&step=3`;
         }
     </script>
 </body>
